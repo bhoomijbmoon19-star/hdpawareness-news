@@ -1,12 +1,14 @@
 name: Daily Health News Update
 on:
   schedule:
-    - cron: '30 2 * * *' # Runs at 02:30
+    - cron: '30 2 * * *' # 8:00 AM IST = 2:30 AM UTC
   workflow_dispatch:
 
 jobs:
   update:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
       - name: Update timestamp to force refresh
