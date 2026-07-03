@@ -1,362 +1,441 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><style>
-@font-face {
-  font-family: "Optimistic";
-  font-style: normal;
-  font-weight: 400 600;
-  font-display: swap;
-  src: url("/fonts/OptimisticAI_VF_Optimized.woff2") format("woff2");
-}
-@font-face {
-  font-family: "Optimistic Mono";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/fonts/OptimisticMono_W_TextRegular.woff2") format("woff2");
-}
-:where(html) {
-  font-family: "Optimistic", system-ui, sans-serif;
-}
-:where(code, pre, kbd, samp) {
-  font-family: "Optimistic Mono", ui-monospace, monospace;
-}
-</style>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HDPAwareness - Global Health News Updates</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-    
-    * {
-        font-family: 'Inter', sans-serif;
-    }
-    
-    body {
-        background: linear-gradient(135deg, #f5f7fa 0%, #e4ecfb 100%);
-        min-height: 100vh;
-    }
-    
-    .glass-effect {
-        background: rgba(255, 255, 255, 0.85);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-    }
-    
-    .card-hover {
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    
-    .card-hover:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 20px 40px -12px rgba(0, 95, 163, 0.25);
-    }
-    
-    .gradient-text {
-        background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-    
-    .line-clamp-2 {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-    
-    .line-clamp-3 {
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-    
-    .skeleton {
-        animation: skeleton-loading 1s linear infinite alternate;
-    }
-    
-    @keyframes skeleton-loading {
-        0% { background-color: hsl(200, 20%, 90%); }
-        100% { background-color: hsl(200, 20%, 95%); }
-    }
-    
-    .filter-chip {
-        transition: all 0.2s ease;
-    }
-    
-    .filter-chip.active {
-        background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
-        color: white;
-    }
-    
-    .toast-enter {
-        animation: slideIn 0.3s ease-out forwards;
-    }
-    
-    @keyframes slideIn {
-        from {
-            transform: translateY(-100%);
-            opacity: 0;
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HDPAwareness - Global Health News Hub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        to {
-            transform: translateY(0);
-            opacity: 1;
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 50%, #f0f9ff 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #1e293b;
         }
-    }
-</style>
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: white;
+            border-radius: 16px;
+            padding: 20px 30px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        
+        .logo-text h1 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1e40af;
+        }
+        
+        .logo-text p {
+            font-size: 12px;
+            color: #64748b;
+        }
+        
+        .refresh-btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        
+        .refresh-btn:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+        
+        .refresh-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .stats-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        .stats-card h2 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+        
+        .stats-card > p {
+            color: #64748b;
+            margin-bottom: 24px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+        
+        .stat-item h3 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        
+        .stat-item p {
+            font-size: 14px;
+            color: #64748b;
+        }
+        
+        .stat-articles { color: #1e293b; }
+        .stat-updated { color: #3b82f6; }
+        .stat-sources { color: #10b981; }
+        .stat-refresh { color: #8b5cf6; }
+        
+        .filters {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+        
+        .filter-btn {
+            padding: 10px 20px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .filter-btn:hover {
+            border-color: #3b82f6;
+            transform: translateY(-1px);
+        }
+        
+        .filter-btn.active {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+        
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+        
+        .news-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        
+        .news-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+        }
+        
+        .news-content {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .news-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 12px;
+        }
+        
+        .news-category {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+        }
+        
+        .category-vaccine { background: #dbeafe; color: #1e40af; }
+        .category-outbreak { background: #fee2e2; color: #dc2626; }
+        .category-drug { background: #d1fae5; color: #059669; }
+        .category-research { background: #e9d5ff; color: #7c3aed; }
+        .category-general { background: #f1f5f9; color: #475569; }
+        
+        .news-date {
+            color: #64748b;
+        }
+        
+        .news-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            line-height: 1.4;
+            color: #1e293b;
+        }
+        
+        .news-description {
+            font-size: 14px;
+            color: #475569;
+            line-height: 1.6;
+            margin-bottom: 16px;
+            flex: 1;
+        }
+        
+        .news-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 16px;
+            border-top: 1px solid #e2e8f0;
+            font-size: 12px;
+            color: #64748b;
+        }
+        
+        .news-source {
+            font-weight: 600;
+        }
+        
+        .error-state {
+            background: white;
+            border-radius: 16px;
+            padding: 60px 30px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        .error-icon {
+            width: 64px;
+            height: 64px;
+            background: #fee2e2;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 32px;
+        }
+        
+        .error-state h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+            color: #1e293b;
+        }
+        
+        .error-state p {
+            color: #64748b;
+            margin-bottom: 24px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 60px;
+            color: #64748b;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e2e8f0;
+            border-top-color: #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #1e293b;
+            color: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+        }
+        
+        .toast.show {
+            display: block;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #64748b;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+            header {
+                padding: 16px 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="sticky top-0 z-50 glass-effect shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16 sm:h-20">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center shadow-lg">
-                        <i class="fas fa-heartbeat text-white text-xl sm:text-2xl"></i>
-                    </div>
-                    <div>
-                        <h1 class="text-xl sm:text-2xl font-extrabold gradient-text">HDPAwareness</h1>
-                        <p class="text-xs text-gray-500 hidden sm:block">Global Health News Hub</p>
-                    </div>
-                </div>
-                
-                <div class="flex items-center gap-2 sm:gap-4">
-                    <div class="hidden md:flex items-center gap-2 text-sm text-gray-600">
-                        <i class="far fa-clock"></i>
-                        <span id="lastUpdated">Loading...</span>
-                    </div>
-                    <button id="refreshBtn" class="px-3 sm:px-4 py-2 bg-gradient-to-r from-sky-500 to-blue-600 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition-all text-sm sm:text-base">
-                        <i class="fas fa-sync-alt mr-0 sm:mr-2"></i>
-                        <span class="hidden sm:inline">Refresh</span>
-                    </button>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">💙</div>
+                <div class="logo-text">
+                    <h1>HDPAwareness</h1>
+                    <p>Global Health News Hub</p>
                 </div>
             </div>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12 pb-6">
-        <div class="glass-effect rounded-2xl p-6 sm:p-8 shadow-xl">
-            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-                <div class="flex-1">
-                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-                        Latest Health News Worldwide
-                    </h2>
-                    <p class="text-gray-600 text-sm sm:text-base">
-                        Stay updated with vaccine launches, disease outbreaks, drug discoveries, and critical health alerts from trusted sources.
-                    </p>
-                </div>
-                <div class="flex items-center gap-4 text-sm">
-                    <div class="flex items-center gap-2 px-4 py-2 bg-green-50 rounded-lg">
-                        <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                        <span class="text-green-700 font-medium">Live Updates</span>
-                    </div>
-                    <div class="text-gray-600">
-                        <i class="far fa-calendar-alt mr-1"></i>
-                        <span id="currentDate"></span>
-                    </div>
-                </div>
-            </div>
+            <button class="refresh-btn" onclick="loadNews(true)">
+                <span>↻</span> Refresh
+            </button>
+        </header>
+        
+        <div class="stats-card">
+            <h2>Latest Health News Worldwide</h2>
+            <p>Stay updated with vaccine launches, disease outbreaks, drug discoveries, and critical health alerts from trusted sources.</p>
             
-            <!-- Stats Row -->
-            <div class="mt-6 pt-6 border-t border-gray-200 grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div>
-                    <div class="text-2xl sm:text-3xl font-bold text-gray-900" id="totalArticles">0</div>
-                    <div class="text-xs sm:text-sm text-gray-500">Articles Today</div>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3 class="stat-articles" id="articlesCount">0</h3>
+                    <p>Articles Today</p>
                 </div>
-                <div>
-                    <div class="text-2xl sm:text-3xl font-bold text-blue-600" id="lastUpdatedTime">--:--</div>
-                    <div class="text-xs sm:text-sm text-gray-500">Last Updated (IST)</div>
+                <div class="stat-item">
+                    <h3 class="stat-updated" id="lastUpdated">--:--</h3>
+                    <p>Last Updated (IST)</p>
                 </div>
-                <div>
-                    <div class="text-2xl sm:text-3xl font-bold text-green-600" id="activeSources">3</div>
-                    <div class="text-xs sm:text-sm text-gray-500">News Sources</div>
+                <div class="stat-item">
+                    <h3 class="stat-sources" id="sourcesCount">3</h3>
+                    <p>News Sources</p>
                 </div>
-                <div>
-                    <div class="text-2xl sm:text-3xl font-bold text-purple-600" id="nextRefresh">--:--</div>
-                    <div class="text-xs sm:text-sm text-gray-500">Next Refresh</div>
+                <div class="stat-item">
+                    <h3 class="stat-refresh" id="nextRefresh">13h 30m</h3>
+                    <p>Next Refresh</p>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Filters -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-6">
-        <div class="flex flex-wrap gap-2">
-            <button class="filter-chip active px-4 py-2 rounded-full text-sm font-medium bg-white shadow-sm border border-gray-200" data-filter="all">
+        
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">
                 All News
             </button>
-            <button class="filter-chip px-4 py-2 rounded-full text-sm font-medium bg-white shadow-sm border border-gray-200" data-filter="vaccine">
-                <i class="fas fa-syringe mr-1"></i> Vaccines
+            <button class="filter-btn" data-filter="vaccine">
+                💉 Vaccines
             </button>
-            <button class="filter-chip px-4 py-2 rounded-full text-sm font-medium bg-white shadow-sm border border-gray-200" data-filter="outbreak">
-                <i class="fas fa-virus mr-1"></i> Outbreaks
+            <button class="filter-btn" data-filter="outbreak">
+                ⚠️ Outbreaks
             </button>
-            <button class="filter-chip px-4 py-2 rounded-full text-sm font-medium bg-white shadow-sm border border-gray-200" data-filter="drug">
-                <i class="fas fa-pills mr-1"></i> Drug Updates
+            <button class="filter-btn" data-filter="drug">
+                💊 Drug Updates
             </button>
-            <button class="filter-chip px-4 py-2 rounded-full text-sm font-medium bg-white shadow-sm border border-gray-200" data-filter="research">
-                <i class="fas fa-microscope mr-1"></i> Research
+            <button class="filter-btn" data-filter="research">
+                🔬 Research
             </button>
         </div>
-    </section>
-
-    <!-- News Grid -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
-        <!-- Loading State -->
-        <div id="loadingGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            <div class="glass-effect rounded-xl overflow-hidden shadow-lg">
-                <div class="skeleton h-48 w-full"></div>
-                <div class="p-5 space-y-3">
-                    <div class="skeleton h-4 w-20 rounded"></div>
-                    <div class="skeleton h-6 w-full rounded"></div>
-                    <div class="skeleton h-4 w-full rounded"></div>
-                    <div class="skeleton h-4 w-3/4 rounded"></div>
-                </div>
-            </div>
-            <div class="glass-effect rounded-xl overflow-hidden shadow-lg hidden md:block">
-                <div class="skeleton h-48 w-full"></div>
-                <div class="p-5 space-y-3">
-                    <div class="skeleton h-4 w-20 rounded"></div>
-                    <div class="skeleton h-6 w-full rounded"></div>
-                    <div class="skeleton h-4 w-full rounded"></div>
-                    <div class="skeleton h-4 w-3/4 rounded"></div>
-                </div>
-            </div>
-            <div class="glass-effect rounded-xl overflow-hidden shadow-lg hidden lg:block">
-                <div class="skeleton h-48 w-full"></div>
-                <div class="p-5 space-y-3">
-                    <div class="skeleton h-4 w-20 rounded"></div>
-                    <div class="skeleton h-6 w-full rounded"></div>
-                    <div class="skeleton h-4 w-full rounded"></div>
-                    <div class="skeleton h-4 w-3/4 rounded"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- News Container -->
-        <div id="newsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 hidden"></div>
-
-        <!-- Error State -->
-        <div id="errorState" class="hidden">
-            <div class="glass-effect rounded-2xl p-8 sm:p-12 text-center shadow-xl">
-                <i class="fas fa-exclamation-circle text-5xl text-red-500 mb-4"></i>
-                <h3 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Unable to Load News</h3>
-                <p class="text-gray-600 mb-6 max-w-md mx-auto">We're having trouble fetching the latest health news. Please try again or check back later.</p>
-                <button id="retryBtn" class="px-6 py-3 bg-gradient-to-r from-sky-500 to-blue-600 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition-all">
-                    <i class="fas fa-redo mr-2"></i>Try Again
-                </button>
-            </div>
-        </div>
-
-        <!-- Empty State -->
-        <div id="emptyState" class="hidden">
-            <div class="glass-effect rounded-2xl p-8 sm:p-12 text-center shadow-xl">
-                <i class="fas fa-newspaper text-5xl text-gray-400 mb-4"></i>
-                <h3 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2">No Articles Found</h3>
-                <p class="text-gray-600">No health news articles match your current filter. Try selecting a different category.</p>
-            </div>
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-white border-t border-gray-200 mt-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-                <div class="text-center md:text-left">
-                    <p class="text-gray-600 text-sm">
-                        © 2024 HDPAwareness. Aggregating trusted health news from WHO, CDC, NIH, and global sources.
-                    </p>
-                    <p class="text-xs text-gray-500 mt-1">For informational purposes only. Consult healthcare professionals for medical advice.</p>
-                </div>
-                <div class="flex gap-4">
-                    <a href="#" class="text-gray-400 hover:text-blue-600 transition-colors">
-                        <i class="fab fa-twitter text-xl"></i>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-blue-600 transition-colors">
-                        <i class="fab fa-linkedin text-xl"></i>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-blue-600 transition-colors">
-                        <i class="fas fa-envelope text-xl"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Toast Notification -->
-    <div id="toast" class="fixed top-20 right-4 z-50 hidden">
-        <div class="glass-effect px-6 py-4 rounded-lg shadow-2xl flex items-center gap-3 max-w-sm">
-            <i id="toastIcon" class="fas fa-check-circle text-green-500 text-xl"></i>
-            <span id="toastMessage" class="text-gray-800 font-medium text-sm"></span>
-        </div>
+        
+        <div id="newsContainer"></div>
+        
+        <footer>
+            <p>© 2024 HDPAwareness. Aggregating trusted health news from WHO, CDC, NIH, and global sources.</p>
+            <p style="margin-top: 8px; font-size: 12px;">For informational purposes only. Consult healthcare professionals for medical advice.</p>
+        </footer>
     </div>
-
+    
+    <div class="toast" id="toast"></div>
+    
     <script>
-        // Configuration
         const CONFIG = {
-            GNEWS_API_KEY: '14817683d50abf6b6f09c2ceff69cd4d',
-            REFRESH_HOUR_IST: 8, // 8 AM IST
-            MAX_ARTICLES: 25,
-            MIN_ARTICLES: 10,
-            CACHE_KEY: 'hdp_news_cache_v2',
-            RSS_PROXY: 'https://api.allorigins.win/raw?url=',
+            API_KEY: '14817683d50abf6b6f09c2ceff69cd4d',
             HEALTH_QUERIES: [
-                'vaccine OR immunization OR vaccination',
+                'vaccine OR vaccination OR immunization',
                 'disease outbreak OR epidemic OR pandemic',
-                'new drug OR FDA approval OR clinical trial OR medicine',
-                'medical research OR health breakthrough'
-            ]
+                'FDA approval OR drug trial OR clinical trial',
+                'WHO health alert OR CDC advisory',
+                'medical breakthrough OR drug discovery'
+            ],
+            MIN_ARTICLES: 10,
+            MAX_ARTICLES: 25,
+            CACHE_DURATION: 30 * 60 * 1000
         };
-
-        // State
+        
         let allArticles = [];
         let currentFilter = 'all';
-        let refreshTimer = null;
-
-        // DOM Elements
-        const newsGrid = document.getElementById('newsGrid');
-        const loadingGrid = document.getElementById('loadingGrid');
-        const errorState = document.getElementById('errorState');
-        const emptyState = document.getElementById('emptyState');
-        const refreshBtn = document.getElementById('refreshBtn');
-        const retryBtn = document.getElementById('retryBtn');
-        const lastUpdated = document.getElementById('lastUpdated');
-        const lastUpdatedTime = document.getElementById('lastUpdatedTime');
-        const currentDate = document.getElementById('currentDate');
-        const nextRefresh = document.getElementById('nextRefresh');
-        const totalArticles = document.getElementById('totalArticles');
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            updateDateTime();
-            setInterval(updateDateTime, 60000);
-            setupEventListeners();
-            loadNews();
-            scheduleDailyRefresh();
-            updateNextRefreshTime();
-            setInterval(updateNextRefreshTime, 60000);
-        });
-
-        function setupEventListeners() {
-            refreshBtn.addEventListener('click', () => loadNews(true));
-            retryBtn.addEventListener('click', () => loadNews(true));
-            
-            document.querySelectorAll('.filter-chip').forEach(chip => {
-                chip.addEventListener('click', (e) => {
-                    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-                    e.currentTarget.classList.add('active');
-                    currentFilter = e.currentTarget.dataset.filter;
-                    displayArticles();
-                });
-            });
-        }
-
+        
         async function loadNews(forceRefresh = false) {
             showLoading();
             
@@ -371,7 +450,7 @@
                         return;
                     }
                 }
-
+                
                 const articles = await fetchHealthNews();
                 
                 if (articles.length >= CONFIG.MIN_ARTICLES) {
@@ -390,13 +469,13 @@
                 showToast('Failed to load news', 'error');
             }
         }
-
+        
         async function fetchHealthNews() {
-            // Use GNews API with multiple queries to get 10-25 articles
             try {
-                const queryPromises = CONFIG.HEALTH_QUERIES.map(query => 
-                    fetch(`https://gnews.io/api/v4/search?q=${encodeURIComponent(query)}&category=health&lang=en&country=us&max=10&apikey=${CONFIG.GNEWS_API_KEY}`)
+                const queryPromises = CONFIG.HEALTH_QUERIES.map(query =>
+                    fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`https://gnews.io/api/v4/search?q=${encodeURIComponent(query)}&category=health&lang=en&country=us&max=10&apikey=${CONFIG.API_KEY}`)}`)
                         .then(r => r.json())
+                        .then(data => JSON.parse(data.contents))
                         .catch(err => {
                             console.warn('GNews query failed:', err);
                             return { articles: [] };
@@ -422,7 +501,7 @@
                 throw err;
             }
         }
-
+        
         function categorizeArticle(text) {
             const lower = text.toLowerCase();
             if (lower.match(/vaccine|vaccination|immuniz|booster|jab/i)) return 'vaccine';
@@ -431,7 +510,7 @@
             if (lower.match(/research|study|discovery|breakthrough|science|scientists/i)) return 'research';
             return 'general';
         }
-
+        
         function removeDuplicates(articles) {
             const seen = new Set();
             return articles.filter(a => {
@@ -441,90 +520,51 @@
                 return true;
             });
         }
-
+        
         function displayArticles() {
+            const container = document.getElementById('newsContainer');
             const filtered = currentFilter === 'all' 
                 ? allArticles 
                 : allArticles.filter(a => a.category === currentFilter);
             
-            totalArticles.textContent = filtered.length;
-            
             if (filtered.length === 0) {
-                showEmpty();
+                container.innerHTML = `
+                    <div class="error-state">
+                        <div class="error-icon">!</div>
+                        <h3>No articles found</h3>
+                        <p>Try selecting a different category or refresh the page.</p>
+                        <button class="refresh-btn" onclick="loadNews(true)">
+                            <span>↻</span> Try Again
+                        </button>
+                    </div>
+                `;
                 return;
             }
             
-            hideAllStates();
-            newsGrid.classList.remove('hidden');
-            newsGrid.innerHTML = filtered.map(article => createArticleCard(article)).join('');
-        }
-
-        function createArticleCard(article) {
-            const categoryColors = {
-                vaccine: 'bg-blue-100 text-blue-700',
-                outbreak: 'bg-red-100 text-red-700',
-                drug: 'bg-purple-100 text-purple-700',
-                research: 'bg-green-100 text-green-700',
-                general: 'bg-gray-100 text-gray-700'
-            };
+            document.getElementById('articlesCount').textContent = filtered.length;
             
-            const categoryLabels = {
-                vaccine: 'Vaccine',
-                outbreak: 'Outbreak',
-                drug: 'Drug Update',
-                research: 'Research',
-                general: 'Health News'
-            };
+            const sources = new Set(filtered.map(a => a.source)).size;
+            document.getElementById('sourcesCount').textContent = sources;
             
-            return `
-                <article class="glass-effect rounded-xl overflow-hidden shadow-lg card-hover">
-                    <a href="${article.url}" target="_blank" rel="noopener noreferrer" class="block">
-                        <div class="relative h-48 overflow-hidden bg-gray-200">
-                            <img 
-                                src="${article.image}" 
-                                alt="${escapeHtml(article.title)}"
-                                loading="lazy"
-                                onerror="this.src='https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800'"
-                                class="w-full h-full object-cover"
-                            >
-                            <div class="absolute top-3 left-3">
-                                <span class="px-3 py-1 rounded-full text-xs font-semibold ${categoryColors[article.category]}">
-                                    ${categoryLabels[article.category]}
-                                </span>
-                            </div>
+            container.innerHTML = '<div class="news-grid">' + filtered.map(article => `
+                <article class="news-card" onclick="window.open('${article.url}', '_blank')">
+                    <img src="${article.image}" alt="${article.title}" class="news-image" onerror="this.src='https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800'">
+                    <div class="news-content">
+                        <div class="news-meta">
+                            <span class="news-category category-${article.category}">${article.category}</span>
+                            <span class="news-date">${formatDate(article.publishedAt)}</span>
                         </div>
-                        <div class="p-5">
-                            <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
-                                <span class="font-medium truncate">${escapeHtml(article.source)}</span>
-                                <span>•</span>
-                                <span>${formatDate(article.publishedAt)}</span>
-                            </div>
-                            <h3 class="text-lg font-bold text-gray-900 mb-2 line-clamp-2 leading-snug">
-                                ${escapeHtml(article.title)}
-                            </h3>
-                            <p class="text-sm text-gray-600 line-clamp-3 leading-relaxed">
-                                ${escapeHtml(article.description)}
-                            </p>
-                            <div class="mt-4 flex items-center text-blue-600 text-sm font-medium">
-                                Read more <i class="fas fa-arrow-right ml-2"></i>
-                            </div>
+                        <h3 class="news-title">${article.title}</h3>
+                        <p class="news-description">${article.description}</p>
+                        <div class="news-footer">
+                            <span class="news-source">${article.source}</span>
+                            <span>Read more →</span>
                         </div>
-                    </a>
+                    </div>
                 </article>
-            `;
+            `).join('') + '</div>';
         }
-
-        function escapeHtml(text) {
-            const map = {
-                '&': '&amp;',
-                '<': '&lt;',
-                '>': '&gt;',
-                '"': '&quot;',
-                "'": '&#039;'
-            };
-            return text.replace(/[&<>"']/g, m => map[m]);
-        }
-
+        
         function formatDate(dateString) {
             const date = new Date(dateString);
             const now = new Date();
@@ -533,140 +573,32 @@
             
             if (hours < 1) return 'Just now';
             if (hours < 24) return `${hours}h ago`;
-            if (hours < 48) return 'Yesterday';
-            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            const days = Math.floor(hours / 24);
+            return `${days}d ago`;
         }
-
-        function showLoading() {
-            hideAllStates();
-            loadingGrid.classList.remove('hidden');
-        }
-
-        function showError() {
-            hideAllStates();
-            errorState.classList.remove('hidden');
-        }
-
-        function showEmpty() {
-            hideAllStates();
-            emptyState.classList.remove('hidden');
-        }
-
-        function hideAllStates() {
-            loadingGrid.classList.add('hidden');
-            newsGrid.classList.add('hidden');
-            errorState.classList.add('hidden');
-            emptyState.classList.add('hidden');
-        }
-
-        function cacheNews(articles) {
-            const cacheData = {
-                articles: articles,
-                timestamp: new Date().toISOString()
-            };
-            localStorage.setItem(CONFIG.CACHE_KEY, JSON.stringify(cacheData));
-        }
-
-        function getCachedNews() {
-            const cached = localStorage.getItem(CONFIG.CACHE_KEY);
-            return cached ? JSON.parse(cached) : null;
-        }
-
-        function isCacheStale(timestamp) {
-            const cacheTime = new Date(timestamp);
-            const now = new Date();
-            const hoursDiff = (now - cacheTime) / 1000 / 60 / 60;
-            return hoursDiff > 1;
-        }
-
+        
         function updateLastUpdated(timestamp) {
             const date = new Date(timestamp);
-            const istTime = new Date(date.getTime() + (5.5 * 60 * 60 * 1000));
-            const timeStr = istTime.toLocaleTimeString('en-IN', { 
-                hour: '2-digit', 
-                minute: '2-digit',
-                timeZone: 'Asia/Kolkata'
-            });
-            
-            lastUpdated.textContent = `Updated ${formatDate(timestamp)}`;
-            lastUpdatedTime.textContent = timeStr;
+            const istTime = new Date(date.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
+            const hours = istTime.getHours().toString().padStart(2, '0');
+            const minutes = istTime.getMinutes().toString().padStart(2, '0');
+            document.getElementById('lastUpdated').textContent = `${hours}:${minutes}`;
+            updateNextRefresh();
         }
-
-        function updateDateTime() {
+        
+        function updateNextRefresh() {
             const now = new Date();
-            currentDate.textContent = now.toLocaleDateString('en-US', { 
-                weekday: 'short', 
-                month: 'short', 
-                day: 'numeric' 
-            });
-        }
-
-        function updateNextRefreshTime() {
-            const now = new Date();
-            const istOffset = 5.5 * 60;
-            const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
-            const istNow = new Date(utc + (istOffset * 60000));
-            
-            const next8AM = new Date(istNow);
-            next8AM.setHours(CONFIG.REFRESH_HOUR_IST, 0, 0, 0);
-            
-            if (istNow > next8AM) {
-                next8AM.setDate(next8AM.getDate() + 1);
+            const tomorrow8am = new Date();
+            tomorrow8am.setHours(8, 0, 0, 0);
+            if (now > tomorrow8am) {
+                tomorrow8am.setDate(tomorrow8am.getDate() + 1);
             }
-            
-            const diff = next8AM - istNow;
+            const diff = tomorrow8am - now;
             const hours = Math.floor(diff / 3600000);
             const minutes = Math.floor((diff % 3600000) / 60000);
-            
-            nextRefresh.textContent = `${hours}h ${minutes}m`;
+            document.getElementById('nextRefresh').textContent = `${hours}h ${minutes}m`;
         }
-
-        function scheduleDailyRefresh() {
-            const now = new Date();
-            const istOffset = 5.5 * 60;
-            const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
-            const istNow = new Date(utc + (istOffset * 60000));
-            
-            const next8AM = new Date(istNow);
-            next8AM.setHours(CONFIG.REFRESH_HOUR_IST, 0, 0, 0);
-            
-            if (istNow > next8AM) {
-                next8AM.setDate(next8AM.getDate() + 1);
-            }
-            
-            const msUntil8AM = next8AM - istNow;
-            
-            if (refreshTimer) clearTimeout(refreshTimer);
-            refreshTimer = setTimeout(() => {
-                loadNews(true);
-                scheduleDailyRefresh();
-            }, msUntil8AM);
-        }
-
-        function showToast(message, type = 'info') {
-            const toast = document.getElementById('toast');
-            const toastMessage = document.getElementById('toastMessage');
-            const toastIcon = document.getElementById('toastIcon');
-            
-            toastMessage.textContent = message;
-            
-            const icons = {
-                success: 'fa-check-circle text-green-500',
-                error: 'fa-exclamation-circle text-red-500',
-                info: 'fa-info-circle text-blue-500'
-            };
-            
-            toastIcon.className = `fas ${icons[type]} text-xl`;
-            toast.classList.remove('hidden');
-            toast.classList.add('toast-enter');
-            
-            setTimeout(() => {
-                toast.classList.add('hidden');
-                toast.classList.remove('toast-enter');
-            }, 3000);
-        }
-    </script>
-<script>(function(){document.addEventListener("click",function(e){var a=e.target.closest("[data-product-id]");if(!a)return;e.preventDefault();var pid=a.getAttribute("data-product-id");if(pid)parent.postMessage({type:"ecto-artifact-link-click",productId:pid},"*")})})();</script>
-<script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;var a=target.closest?target.closest("a[href]"):null;if(!a||!a.href||!/^https?:\/\//.test(a.href))return;if(a.href.replace(/#.*$/,"")===loc)return;var productId=extractProductId(target)||extractProductId(a);if(!productId)return;e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*")},true)})();</script></body>
-</html><!-- Updated: Fri Jul  3 12:20:20 UTC 2026 | IST: Fri Jul  3 17:50:20 IST 2026 -->
-<!-- Updated: Fri Jul  3 12:32:01 UTC 2026 | IST: Fri Jul  3 18:02:01 IST 2026 -->
+        
+        function showLoading() {
+            document.getElementById('newsContainer').innerHTML = `
+       
