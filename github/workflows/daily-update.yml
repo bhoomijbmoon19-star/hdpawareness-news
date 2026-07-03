@@ -1,0 +1,21 @@
+name: Daily Health News Update
+on:
+  schedule:
+    - cron: '30 2 * * *'  # 8:00 AM IST = 2:30 AM UTC
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update timestamp to force refresh
+        run: |
+          echo "<!-- Updated: $(date -u) | IST: $(TZ='Asia/Kolkata' date) -->" >> index.html
+      - name: Commit changes
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add index.html
+          git commit -m "Auto update health news $(date)" || exit 0
+          git push
